@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Write Page',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Write Page'),
     );
   }
 }
@@ -42,6 +43,84 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
+
+class _MyHomePageState extends State<MyHomePage> {
+  var _message;
+  final controller = TextEditingController();
+
+
+  @override
+  void initState() {
+    _message = 'ok.';
+    super.initState();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('App Name'),
+      ),
+      body:
+      Center(
+        child:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+
+
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                _message,
+                style: TextStyle(fontSize:32.0,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto"),
+              ),
+            ),
+
+
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: TextField(
+                controller: controller,
+                style: TextStyle(fontSize:28.0,
+                    color: const Color(0xFFFF0000),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto"),
+              ),
+            ),
+
+            FlatButton(
+                padding: EdgeInsets.all(10.0),
+                color: Colors.lightBlueAccent,
+                child: Text(
+                  "Push me!",
+                  style: TextStyle(fontSize:32.0,
+                      color: const Color(0xFF000000),
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Roboto"),
+                ),
+                onPressed: buttonPressed
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  void buttonPressed(){
+    setState((){
+      Firestore.instance.collection('post').document()
+          .setData({ 'author': 'mio', 'content': controller.text, 'date': '20200225', 'title': 'title' });
+      _message = 'you said: ' + controller.text;
+    });
+  }
+
+}
+/*
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
@@ -108,4 +187,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
+}*/
