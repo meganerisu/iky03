@@ -62,7 +62,7 @@ class _ListPostsPagState extends State<ListPostsPage> {
                     Navigator.push(
                       context, 
                       MaterialPageRoute(
-                        builder: (_) => PostDetailPage(),
+                        builder: (_) => PostDetailPage(document: document),
                       )
                     );
                   },
@@ -81,32 +81,56 @@ class _ListPostsPagState extends State<ListPostsPage> {
 }
 
 class PostDetailPage extends StatefulWidget {
+  final DocumentSnapshot document;
+
+  PostDetailPage({@required this.document});
+
   @override
-  _PostDetailPageState createState() => _PostDetailPageState();
+  _PostDetailPageState createState() => _PostDetailPageState(document: document);
 }
 
 class _PostDetailPageState extends State<PostDetailPage> {
+  final DocumentSnapshot document;
+
+  _PostDetailPageState({
+    @required this.document
+  });
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: new Text("title"),
+        title: Text(document["title"]),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Container(
-              child: Text("title"),
-            ),
-            Container(
-              child: Text("autor"),
-            ),
-            Container(
-              child: Text("content"),
-            ),
-          ],
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                color: Colors.blue,
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  document["title"],
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  document["author"],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  document["content"],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
