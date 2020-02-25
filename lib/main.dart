@@ -26,15 +26,11 @@ class ListPostsPage extends StatefulWidget {
 }
 
 class _ListPostsPagState extends State<ListPostsPage> {
-  final List<Widget> _Posts = <Widget>[
+  final List<Widget> _posts = <Widget>[
     ListTile(
       leading: const Icon(Icons.star),
       title: const Text("first item"),
-      /*selected: _index == 1,
-      onTap: () {
-        _index = 1;
-        tapTile();
-      },*/
+      subtitle: const Text("subtitle"),
     ),
     ListTile(
       leading: const Icon(Icons.favorite),
@@ -54,6 +50,42 @@ class _ListPostsPagState extends State<ListPostsPage> {
         tapTile();
       },*/
     ),
+    ListTile(
+      leading: const Icon(Icons.android),
+      title: const Text("third item"),
+    ),
+    ListTile(
+      leading: const Icon(Icons.android),
+      title: const Text("third item"),
+    ),
+    ListTile(
+      leading: const Icon(Icons.android),
+      title: const Text("third item"),
+    ),
+    ListTile(
+      leading: const Icon(Icons.android),
+      title: const Text("third item"),
+    ),
+    ListTile(
+      leading: const Icon(Icons.android),
+      title: const Text("third item"),
+    ),
+    ListTile(
+      leading: const Icon(Icons.android),
+      title: const Text("third item"),
+    ),
+    ListTile(
+      leading: const Icon(Icons.android),
+      title: const Text("third item"),
+    ),
+    ListTile(
+      leading: const Icon(Icons.android),
+      title: const Text("third item"),
+    ),
+    ListTile(
+      leading: const Icon(Icons.android),
+      title: const Text("eleventh item"),
+    ),
   ];
   String _message;
   int _index;
@@ -70,52 +102,41 @@ class _ListPostsPagState extends State<ListPostsPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              _message,
-            ),
-            ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(10),
-              children: _Posts,
+      body: ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(10),
+        children: _posts,
 
-              /*children: <Widget>[
-                ListTile(
-                  leading: const Icon(Icons.star),
-                  title: const Text("first item"),
-                  selected: _index == 1,
-                  onTap: () {
-                    _index = 1;
-                    tapTile();
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.star),
-                  title: const Text("second item"),
-                  selected: _index == 2,
-                  onTap: () {
-                    _index = 2;
-                    tapTile();
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.star),
-                  title: const Text("third item"),
-                  selected: _index == 3,
-                  onTap: () {
-                    _index = 2;
-                    tapTile();
-                  },
-                ),
-              ],*/
-            ),
-          ],
-        ),
-      ), 
+        /*children: <Widget>[
+          ListTile(
+            leading: const Icon(Icons.star),
+            title: const Text("first item"),
+            selected: _index == 1,
+            onTap: () {
+              _index = 1;
+              tapTile();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.star),
+            title: const Text("second item"),
+            selected: _index == 2,
+            onTap: () {
+              _index = 2;
+              tapTile();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.star),
+            title: const Text("third item"),
+            selected: _index == 3,
+            onTap: () {
+              _index = 2;
+              tapTile();
+            },
+          ),
+        ],*/
+      ),
     );
   }
   
