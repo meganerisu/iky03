@@ -2,6 +2,11 @@
 
 A new Flutter application.
 
+## 完了事項
+
+- AndroidでのFirebase導入、起動確認
+- iOSでのFirebase導入、起動確認
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
