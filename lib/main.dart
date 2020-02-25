@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,67 +26,6 @@ class ListPostsPage extends StatefulWidget {
 }
 
 class _ListPostsPagState extends State<ListPostsPage> {
-  final List<Widget> _posts = <Widget>[
-    ListTile(
-      leading: const Icon(Icons.star),
-      title: const Text("first item"),
-      subtitle: const Text("subtitle"),
-    ),
-    ListTile(
-      leading: const Icon(Icons.favorite),
-      title: const Text("second item"),
-      /*selected: _index == 2,
-      onTap: () {
-        _index = 2;
-        tapTile();
-      },*/
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("third item"),
-      /*selected: _index == 3,
-      onTap: () {
-        _index = 2;
-        tapTile();
-      },*/
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("third item"),
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("third item"),
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("third item"),
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("third item"),
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("third item"),
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("third item"),
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("third item"),
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("third item"),
-    ),
-    ListTile(
-      leading: const Icon(Icons.android),
-      title: const Text("eleventh item"),
-    ),
-  ];
 
   @override
   void initState() {
@@ -96,7 +34,15 @@ class _ListPostsPagState extends State<ListPostsPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: createListView(),
+    );
+  }
+  
+  createListView(){
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection("posts").snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
@@ -112,6 +58,14 @@ class _ListPostsPagState extends State<ListPostsPage> {
                 child: ListTile(
                   title: new Text(document["title"]),
                   subtitle: new Text(document["author"]),
+                  onTap: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (_) => PostDetailPage(),
+                      )
+                    );
+                  },
                 )
               );
             }).toList()
@@ -119,21 +73,42 @@ class _ListPostsPagState extends State<ListPostsPage> {
         }
       }
     );
-
-
-    /*return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(10),
-        children: _posts,
-      ),
-    );*/
   }
 
-  Future getDocuments(String collection) async {
+  /*Future getDocuments(String collection) async {
   return await Firestore.instance.collection(collection).getDocuments();
+  }*/
+}
+
+class PostDetailPage extends StatefulWidget {
+  @override
+  _PostDetailPageState createState() => _PostDetailPageState();
+}
+
+class _PostDetailPageState extends State<PostDetailPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: new Text("title"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Container(
+              child: Text("title"),
+            ),
+            Container(
+              child: Text("autor"),
+            ),
+            Container(
+              child: Text("content"),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
