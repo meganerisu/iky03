@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(MyApp());
 
@@ -87,18 +88,40 @@ class _ListPostsPagState extends State<ListPostsPage> {
       title: const Text("eleventh item"),
     ),
   ];
-  String _message;
-  int _index;
 
   @override
   void initState() {
-    _message = "ok";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection("posts").snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
+        if (snapShot.hasError) {
+          return new Text("Error: ${snapShot.error}");
+        }
+        switch (snapShot.connectionState) {
+          case ConnectionState.waiting: return new Text("Loading");
+          default:
+          return new ListView(
+            children: snapShot.data.documents.map((DocumentSnapshot document) {
+              return new Material(
+                child: ListTile(
+                  title: new Text(document["title"]),
+                  subtitle: new Text(document["author"]),
+                )
+              );
+            }).toList()
+          );
+        }
+      }
+    );
+
+
+    /*return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -106,43 +129,11 @@ class _ListPostsPagState extends State<ListPostsPage> {
         shrinkWrap: true,
         padding: const EdgeInsets.all(10),
         children: _posts,
-
-        /*children: <Widget>[
-          ListTile(
-            leading: const Icon(Icons.star),
-            title: const Text("first item"),
-            selected: _index == 1,
-            onTap: () {
-              _index = 1;
-              tapTile();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.star),
-            title: const Text("second item"),
-            selected: _index == 2,
-            onTap: () {
-              _index = 2;
-              tapTile();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.star),
-            title: const Text("third item"),
-            selected: _index == 3,
-            onTap: () {
-              _index = 2;
-              tapTile();
-            },
-          ),
-        ],*/
       ),
-    );
+    );*/
   }
-  
-  void tapTile() {
-    setState(() {
-      _message = "You tapped: No, $_index";
-    });
+
+  Future getDocuments(String collection) async {
+  return await Firestore.instance.collection(collection).getDocuments();
   }
 }
