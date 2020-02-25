@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "139759486100",
+    "firebase_url": "https://iky03-544b7.firebaseio.com",
+    "project_id": "iky03-544b7",
+    "storage_bucket": "iky03-544b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139759486100:android:26d47ac4f9072780cde081",
+        "android_client_info": {
+          "package_name": "com.arcircle.iky03"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139759486100-oba7p1op0340c757cmcbkao3p54t17v5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdY5imCQ95o2M4RxJNa1zoDSk392gCgvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139759486100-oba7p1op0340c757cmcbkao3p54t17v5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
