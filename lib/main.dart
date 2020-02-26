@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -51,13 +54,19 @@ class _ListPostsPagState extends State<ListPostsPage> {
         }
         switch (snapShot.connectionState) {
           case ConnectionState.waiting: return new Text("Loading");
-          default:
+          default: 
           return new ListView(
             children: snapShot.data.documents.map((DocumentSnapshot document) {
               return new Material(
                 child: ListTile(
-                  title: new Text(document["title"]),
-                  subtitle: new Text(document["author"]),
+                  title: new Text(
+                    document["title"],
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: new Text(dateToString(document["date"])),
                   onTap: () {
                     Navigator.push(
                       context, 
@@ -74,10 +83,13 @@ class _ListPostsPagState extends State<ListPostsPage> {
       }
     );
   }
+  String dateToString(Timestamp dateTime)  {
+    initializeDateFormatting("ja_JP");
 
-  /*Future getDocuments(String collection) async {
-  return await Firestore.instance.collection(collection).getDocuments();
-  }*/
+    var formatter = new DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
+    var formatted = formatter.format(dateTime.toDate()); // DateからString
+    return formatted.toString();
+  }
 }
 
 class PostDetailPage extends StatefulWidget {
@@ -105,6 +117,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
       body: SingleChildScrollView(
         child: Container(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
                 color: Colors.blue,
@@ -124,6 +137,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                 ),
               ),
               Container(
+                color: Colors.blue,
                 padding: EdgeInsets.all(10),
                 child: Text(
                   document["content"],

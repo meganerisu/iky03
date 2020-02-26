@@ -19,6 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.16.1
   firebase_core: ^0.4.4
   firebase_analytics: ^5.0.11
   cloud_firestore: ^0.13.3
