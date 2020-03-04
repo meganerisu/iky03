@@ -55,40 +55,52 @@ class _ListPostsPagState extends State<ListPostsPage> {
         switch (snapShot.connectionState) {
           case ConnectionState.waiting: return new Text("Loading");
           default: 
-          return new ListView(
-            children: snapShot.data.documents.map((DocumentSnapshot document) {
-              return new Material(
-                child: ListTile(
-                  title: new Text(
-                    document["title"],
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: new Text(dateToString(document["date"])),
-                  onTap: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (_) => PostDetailPage(document: document),
-                      )
-                    );
-                  },
-                )
-              );
-            }).toList()
-          );
+          return getPosts(snapShot);
         }
       }
     );
   }
+
   String dateToString(Timestamp dateTime)  {
     initializeDateFormatting("ja_JP");
 
     var formatter = new DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
     var formatted = formatter.format(dateTime.toDate()); // DateからString
     return formatted.toString();
+  }
+  
+  getPosts(AsyncSnapshot<QuerySnapshot> snapShot) {
+    List<Widget> listPosts = <Widget>[];
+    List<DocumentSnapshot> posts = snapShot.data.documents;
+
+    posts.sort((a, b) => a["date"].compareTo(b["date"]));
+
+    listPosts = posts.map((DocumentSnapshot document) {
+      return new Material(
+        child: ListTile(
+          title: new Text(
+            document["title"],
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: new Text(dateToString(document["date"])),
+          onTap: () {
+            Navigator.push(
+              context, 
+              MaterialPageRoute(
+                builder: (_) => PostDetailPage(document: document),
+              )
+            );
+          },
+        )
+      );
+    }).toList();
+
+    return new ListView(
+      children: listPosts
+    );
   }
 }
 
